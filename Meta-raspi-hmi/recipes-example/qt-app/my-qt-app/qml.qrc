@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Page1Form.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>OGA3ET0.jpg</file>
+        <file>powerbutton.png</file>
+        <file>restart.png</file>
+        <file>terminal.png</file>
+    </qresource>
+</RCC>
