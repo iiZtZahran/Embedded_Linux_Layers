@@ -1,41 +1,81 @@
-This README file contains information on the contents of the raspi-hmi layer.
+# `raspi-hmi` Yocto Layer
 
-Please see the corresponding sections below for details.
+This is a Yocto layer that creates a custom HMI image for Raspberry Pi 3 B+, with Qt-based QML GUI support. It includes essential packages like SSH, Wi-Fi, Bluetooth, and a QML-based Qt application.
 
-Dependencies
-============
+## Features
+- Custom Yocto image for Raspberry Pi 3 B+
+- Includes essential packages like Wi-Fi, Bluetooth, and SSH
+- Qt-based QML GUI application
+- Matchbox window manager for UI handling
 
-  URI: <first dependency>
-  branch: <branch name>
+## Directory Structure
 
-  URI: <second dependency>
-  branch: <branch name>
+The layer is organized as follows:
 
-  .
-  .
-  .
+```
+raspi-hmi/
+├── conf/
+│   └── layer.conf               # Layer configuration file
+├── recipes-core/
+│   └── images/
+│       └── core-image-hmi.bb    # Custom image recipe
+├── recipes-example/
+│   └── qt-app/
+│       ├── qt-app.bb            # Qt application recipe
+│       ├── my-qt-app.pro        # Qt application project file
+│       ├── main.cpp             # Main entry point for the Qt app
+│       └── qml.qrc              # QML resource file
+└── README.md                    # This file
+```
 
-Patches
-=======
+### Key Components:
+1. **`core-image-hmi.bb`**: Custom image recipe that defines the installation of necessary packages, including Qt, SSH, and Matchbox.
+2. **`qt-app.bb`**: Recipe for building the Qt application, which includes the necessary Qt dependencies and the `.pro` file for QML-based application building.
 
-Please submit any patches against the raspi-hmi layer to the xxxx mailing list (xxxx@zzzz.org)
-and cc: the maintainer:
+## Requirements
+- **Yocto Project**: Make sure to have the Yocto Project set up and configured.
+- **Raspberry Pi 3 B+**: This layer is targeted at the Raspberry Pi 3 B+.
 
-Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
+## Layer Setup
 
-Table of Contents
-=================
+1. **Clone the repository**:
 
-  I. Adding the raspi-hmi layer to your build
- II. Misc
+   Clone the `raspi-hmi` layer to your Yocto project directory:
 
+   ```bash
+   cd /path/to/your/yocto/project
+   git clone https://github.com/iiZtZahran/Embedded_Linux_Layers/tree/master/Meta-raspi-hmi
+   ```
 
-I. Adding the raspi-hmi layer to your build
-=================================================
+2. **Add the layer to your Yocto build**:
 
-Run 'bitbake-layers add-layer raspi-hmi'
+   Add the layer to your `bblayers.conf` file:
 
-II. Misc
-========
+   ```bash
+   bitbake-layers add-layer /path/to/your/yocto/project/raspi-hmi
+   ```
 
---- replace with specific information about the raspi-hmi layer ---
+3. **Set the machine configuration**:
+
+   Ensure that the machine configuration for Raspberry Pi 3 B+ is set in `local.conf`:
+
+   ```bash
+   MACHINE = "raspberrypi3-64"
+   ```
+
+## Building the Image
+
+To build the custom HMI image, run the following command:
+
+```bash
+bitbake core-image-hmi
+```
+
+This will generate the image, including the Qt-based QML application, SSH, Wi-Fi, and Bluetooth support.
+
+## Qt Application Integration
+
+The Qt application is built using a `.pro` file that specifies dependencies for QtQuick and QtDeclarative (for QML). The application is built and installed to the target image via the `qt-app.bb` recipe. 
+
+The `main.cpp` file launches the QML UI using the Qt application engine, and resources like `main.qml` are included in the build through the `.qrc` file.
+
